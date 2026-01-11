@@ -27,11 +27,6 @@ export default function Index() {
   const handleFileUpload = useCallback(async (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
-    if (!yourName.trim()) {
-      toast.error('Please enter your name first');
-      return;
-    }
-
     for (const file of Array.from(files)) {
       const fileId = crypto.randomUUID();
       const newFile: UploadedFile = {
@@ -189,7 +184,7 @@ export default function Index() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="name" className="text-slate-200">Your Name *</Label>
+              <Label htmlFor="name" className="text-slate-200">Your Name (optional)</Label>
               <Input
                 id="name"
                 value={yourName}
@@ -245,17 +240,11 @@ export default function Index() {
                 <Button
                   variant="secondary"
                   className="cursor-pointer"
-                  disabled={!yourName.trim()}
                   asChild
                 >
                   <span>Choose Files</span>
                 </Button>
               </label>
-              {!yourName.trim() && (
-                <p className="text-amber-400 text-sm mt-3">
-                  Please enter your name above first
-                </p>
-              )}
             </div>
 
             {/* Uploaded Files List */}
