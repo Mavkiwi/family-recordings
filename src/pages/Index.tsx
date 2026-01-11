@@ -66,6 +66,7 @@ export default function Index() {
         // Send to n8n webhook
         const response = await fetch('https://plex.app.n8n.cloud/webhook/for-kirsten', {
           method: 'POST',
+          mode: 'cors',
           body: formData,
         });
 
