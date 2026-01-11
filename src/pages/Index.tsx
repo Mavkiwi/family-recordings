@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
 import { Upload, CheckCircle2, Heart, Mic, FileAudio, Clock, HelpCircle, AlertCircle } from 'lucide-react';
+import { sendFileToWebhook } from '@/lib/webhook';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -56,36 +57,22 @@ export default function Index() {
       }, 200);
 
       try {
-        // Create form data for webhook
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('name', yourName);
-        formData.append('relationship', relationship);
-        formData.append('timestamp', new Date().toISOString());
-
-        // Send to n8n webhook
-        const response = await fetch('https://plex.app.n8n.cloud/webhook/for-kirsten', {
-          method: 'POST',
-          mode: 'cors',
-          body: formData,
-        });
+        // Send to n8n webhook using the webhook lib
+        await sendFileToWebhook(file, 'family_recording', yourName, relationship);
 
         clearInterval(interval);
 
-        if (response.ok) {
-          setUploadedFiles(prev =>
-            prev.map(f =>
-              f.id === fileId
-                ? { ...f, status: 'complete', progress: 100 }
-                : f
-            )
-          );
-          toast.success(`${file.name} uploaded successfully!`);
-        } else {
-          throw new Error('Upload failed');
-        }
+        setUploadedFiles(prev =>
+          prev.map(f =>
+            f.id === fileId
+              ? { ...f, status: 'complete', progress: 100 }
+              : f
+          )
+        );
+        toast.success(`${file.name} uploaded successfully!`);
       } catch (error) {
         clearInterval(interval);
+        console.error('Upload error:', error);
         setUploadedFiles(prev =>
           prev.map(f =>
             f.id === fileId
