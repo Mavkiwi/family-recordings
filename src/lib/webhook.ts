@@ -1,4 +1,4 @@
-const WEBHOOK_URL = 'https://plex.app.n8n.cloud/webhook/for-kirsten';
+const WEBHOOK_URL = 'https://plex.app.n8n.cloud/webhook/voice-idea';
 
 export async function sendFileToWebhook(file: File, type: string, name?: string, relationship?: string): Promise<void> {
   console.log('[Webhook] Sending file:', file.name);
