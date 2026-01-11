@@ -1,6 +1,6 @@
 import { Recording } from '@/types/voice-capture';
 
-const WEBHOOK_URL = 'https://plex.app.n8n.cloud/webhook/voice-idea';
+const WEBHOOK_URL = 'https://plex.app.n8n.cloud/webhook/for-kirsten;
 
 export async function sendToWebhook(recording: Recording, audioBlob: Blob, attachedFile?: File): Promise<void> {
   console.log('[Webhook] Starting send to:', WEBHOOK_URL);
