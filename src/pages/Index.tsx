@@ -64,7 +64,7 @@ export default function Index() {
         formData.append('timestamp', new Date().toISOString());
 
         // Send to n8n webhook
-        const response = await fetch('https://n8n.plex.nz/webhook/for-kirsten', {
+        const response = await fetch('https://plex.app.n8n.cloud/webhook/for-kirsten', {
           method: 'POST',
           body: formData,
         });
