@@ -6,6 +6,7 @@ export async function sendFileToWebhook(file: File, type: string, name?: string,
   const metadata: Record<string, unknown> = {
     type,
     timestamp: new Date().toISOString(),
+    file_only: true,
     file_name: file.name,
     file_type: file.type,
     file_size: file.size,
@@ -14,10 +15,10 @@ export async function sendFileToWebhook(file: File, type: string, name?: string,
   };
 
   const formData = new FormData();
-  formData.append('audio', file, file.name);
+  formData.append('attachment', file, file.name);
   formData.append('metadata', JSON.stringify(metadata));
 
-  console.log('[Webhook] Metadata:', metadata);
+  console.log('[Webhook] File metadata:', metadata);
 
   try {
     const response = await fetch(WEBHOOK_URL, {
